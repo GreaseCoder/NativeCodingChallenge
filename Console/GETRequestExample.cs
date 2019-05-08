@@ -15,9 +15,9 @@ namespace Console
             this.client = client;
         }
 
-        public Task MakeRequest(string url)
+        public Task MakeRequestAsync(string url)
         {
-            return client.MakeRequest(url);
+            return client.MakeRequestAsync(url);
         }
     }
 }

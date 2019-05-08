@@ -7,6 +7,6 @@ namespace Console.Interfaces
 {
     public interface IRequestClient : IDisposable
     {
-        Task MakeRequest(string url);
+        Task MakeRequestAsync(string url);
     }
 }

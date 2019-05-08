@@ -20,7 +20,7 @@ namespace Console.Engines
             client.Dispose();
         }
 
-        public async Task MakeRequest(string url)
+        public async Task MakeRequestAsync(string url)
         {
             using (var response = await client.GetAsync(url))
             {

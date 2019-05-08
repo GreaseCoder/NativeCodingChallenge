@@ -54,7 +54,7 @@ namespace Console
         private static void GETRequest(string url)
         {
             var client = new GETRequestExample(new HTTPRequestClient());
-            client.MakeRequest(url).Wait();
+            client.MakeRequestAsync(url).Wait();
         }
 
 
