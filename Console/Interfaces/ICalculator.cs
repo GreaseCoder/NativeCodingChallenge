@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Part1.Interfaces
+namespace Console.Interfaces
 {
     public interface ICalculator
     {

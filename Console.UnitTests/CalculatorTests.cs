@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
-using Part1.Engines;
-using Part1.Interfaces;
+using Console.Engines;
+using Console.Interfaces;
 using System;
 using System.Collections.Generic;
 

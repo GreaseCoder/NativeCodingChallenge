@@ -1,10 +1,10 @@
-﻿using Part1.Interfaces;
+﻿using Console.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Part1
+namespace Console
 {
     /// <summary>
     /// A container to demonstrate calculator abilities through <seealso cref="ICalculator"/> injection.

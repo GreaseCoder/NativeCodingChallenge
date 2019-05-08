@@ -1,9 +1,9 @@
-﻿using Part1.Interfaces;
+﻿using Console.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Part1.Engines
+namespace Console.Engines
 {
     /// <summary>
     /// A standard calculation engine for base 10 calculations.

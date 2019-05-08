@@ -1,15 +1,16 @@
-﻿using Part1.Engines;
+﻿using Console.Engines;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Part1
+namespace Console
 {
     class Program
     {
         private static async Task<int> Main(string[] args)
         {
-            sumEvenNumbers();
+            var sum = sumEvenNumbers();
+            GETRequest(@"https://baconipsum.com/api/?type=meat-and-filler");
 
             return 0;
         }
@@ -23,7 +24,8 @@ namespace Part1
 
         private static void GETRequest(string url)
         {
-
+            var client = new GETRequestExample(new HTTPRequestClient());
+            client.MakeRequest(url).Wait();
         }
     }
 }
