@@ -1,4 +1,5 @@
 ﻿using Console.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Console.Interfaces
 {
-    public interface IRequestClient : IDisposable
+    interface IDbLoggingContext
     {
-        Task<ServerResponse> MakeRequestAsync(string url);
+        Task AddLogEntry(ServerResponseLog serverResponseLog);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Console.Interfaces;
+using Console.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -20,19 +21,35 @@ namespace Console.Engines
             client.Dispose();
         }
 
-        public async Task MakeRequestAsync(string url)
+        public async Task<ServerResponse> MakeRequestAsync(string url)
         {
+            var startTime = DateTime.Now;
+            string responseContent = null;
+
             using (var response = await client.GetAsync(url))
             {
+                var endTime = DateTime.Now;
                 using (var content = response.Content)
                 {
                     var data = await content.ReadAsStringAsync();
+
                     if (data != null)
                     {
                         System.Console.WriteLine(data);
+                        responseContent = data;
                     }
                 }
+
+                return new ServerResponse()
+                {
+                    StartTime = startTime,
+                    EndTime = endTime,
+                    HttpStatusCode = (int)response.StatusCode,
+                    Response = responseContent,
+                    ErrorCode = ErrorCodes.Success
+                };
             }
+
         }
 
     }

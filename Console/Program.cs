@@ -1,4 +1,5 @@
 ﻿using Console.Engines;
+using Console.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace Console
         /// </summary>
         private static void GETRequest(string url)
         {
-            var client = new GETRequestExample(new HTTPRequestClient());
+            var client = new GETRequestExample(new HTTPRequestClient(), new ServerResponseLogContext());
             client.MakeRequestAsync(url).Wait();
         }
 
