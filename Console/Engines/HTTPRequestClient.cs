@@ -44,8 +44,7 @@ namespace Console.Engines
                     StartTime = startTime,
                     EndTime = endTime,
                     HttpStatusCode = (int)response.StatusCode,
-                    Response = responseContent,
-                    ErrorCode = ErrorCodes.Success
+                    Response = responseContent
                 };
             }
 

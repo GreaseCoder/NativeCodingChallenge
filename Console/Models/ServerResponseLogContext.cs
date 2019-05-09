@@ -52,6 +52,9 @@ namespace Console.Models
                 entity.Property(e => e.InsertDate)
                     .HasColumnType("datetime2")
                     .HasDefaultValueSql("(GetUTCDate())");
+
+                entity.Property(e => e.ErrorCode)
+                    .HasComputedColumnSql("case HTTPStatusCode when 200 then 1 when 408 then - 999 else 2 end");
             });
 
         }

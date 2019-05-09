@@ -3,8 +3,8 @@ use ae_code_challange
 /*
 
 exec ae_code_challange.dbo.ServerResponseLog_GetLatestResponses
-		@StartTime = '',
-		@EndTime = ''
+		@StartTime = '2019-01-01',
+		@EndTime = '2019-10-02'
 
 
 */

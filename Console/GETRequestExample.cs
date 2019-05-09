@@ -35,8 +35,7 @@ namespace Console
                 StartTime = requestResponse.StartTime,
                 EndTime = requestResponse.EndTime,
                 HttpStatusCode = requestResponse.HttpStatusCode,
-                ResponseText = requestResponse.Response,
-                ErrorCode = (int)requestResponse.ErrorCode
+                ResponseText = requestResponse.Response
             };
 
             await logContext.AddAsync(logEntry);

@@ -24,7 +24,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(statusCode))
+                if (string.IsNullOrWhiteSpace(statusCode) || statusCode == "200")
                 {
                     string result = await timeService.GetTimeAsync();
                     return new OkObjectResult(result);
