@@ -31,7 +31,6 @@ namespace Console
             var sum = sumEvenNumbers();
 
             // Create a function that will make an http GET request to a given URL and dump out the result in Console.
-            //GETRequest(@"https://baconipsum.com/api/?type=meat-and-filler");
             GETRequest("http://localhost:5000/api/v1/time");
 
             // Create a function which will print out the numbers in a List to the console in a loop with a configurable delay.
@@ -47,6 +46,7 @@ namespace Console
         {
             var calculator = new CalculatorExample(new Base10Calculator());
             var numbers = new List<int> { 1, 2, 3, 4, 5 };
+
             return calculator.AddEvenNumbers(numbers);
         }
 
@@ -57,6 +57,8 @@ namespace Console
         {
             var client = new GETRequestExample(new HTTPRequestClient(), new ServerResponseLogContext());
             client.MakeRequestAsync(url).Wait();
+            client.MakeRequestAsync(url, 200).Wait();
+            client.MakeRequestAsync(url, 500).Wait();
         }
 
 

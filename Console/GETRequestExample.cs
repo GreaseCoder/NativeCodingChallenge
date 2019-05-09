@@ -19,9 +19,12 @@ namespace Console
             this.logContext = logContext;
         }
 
-        public async Task MakeRequestAsync(string url)
+        public async Task MakeRequestAsync(string url, int? httpStatusCodeOverride = null)
         {
-            var response = await client.MakeRequestAsync(url);
+            var fullUrl = httpStatusCodeOverride == null ? url : $"{url}?statuscode={httpStatusCodeOverride}";
+            System.Console.WriteLine($"Calling {fullUrl}");
+
+            var response = await client.MakeRequestAsync(fullUrl);
             LogRequest(response).Wait();
         }
 

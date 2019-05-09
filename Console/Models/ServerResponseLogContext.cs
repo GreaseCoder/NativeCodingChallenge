@@ -50,7 +50,8 @@ namespace Console.Models
                     .HasColumnType("datetime2");
 
                 entity.Property(e => e.InsertDate)
-                    .HasColumnType("datetime2");
+                    .HasColumnType("datetime2")
+                    .HasDefaultValueSql("(GetUTCDate())");
             });
 
         }

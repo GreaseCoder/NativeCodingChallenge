@@ -23,9 +23,8 @@ namespace Console.Engines
 
         public async Task<ServerResponse> MakeRequestAsync(string url)
         {
-            var startTime = DateTime.Now;
             string responseContent = null;
-
+            var startTime = DateTime.Now;
             using (var response = await client.GetAsync(url))
             {
                 var endTime = DateTime.Now;
