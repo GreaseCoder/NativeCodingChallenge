@@ -12,6 +12,6 @@ namespace Console.Models
         public int HttpStatusCode { get; set; }
         public string ResponseText { get; set; }
         public int ErrorCode { get; set; }
-        public DateTime InsertDate { get; set; }
+        public DateTime InsertDateUTC { get; set; }
     }
 }

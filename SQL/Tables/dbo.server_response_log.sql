@@ -4,7 +4,7 @@ drop table dbo.server_response_log
 
 create table dbo.server_response_log
 (
-	LogID uniqueidentifier constraint [DF_server_response_log_LogID] default (newsequentialid()) rowguidcol not null,
+	LogID uniqueidentifier primary key default (NewSequentialId()),
 	StartTime datetime2 not null,
 	EndTime datetime2 not null,
 	HTTPStatusCode int not null,
@@ -15,8 +15,7 @@ create table dbo.server_response_log
 			when 408 then -999
 			else 2
 		end,
-	InsertDateUTC datetime2 default GetUTCDate(),
-	constraint [pk__server_response_log__LogID] primary key clustered (LogID asc),
+	InsertDateUTC datetime2 default (GetUTCDate())
 )
 go
 

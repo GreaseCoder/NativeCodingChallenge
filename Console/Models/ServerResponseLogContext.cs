@@ -38,10 +38,10 @@ namespace Console.Models
 
                 entity.HasIndex(e => e.StartTime)
                     .HasName("nix__server_response_log__StartTime_ResponseText");
-
+                
                 entity.Property(e => e.LogID)
-                    .HasColumnName("LogID")
-                    .HasDefaultValueSql("(newsequentialid())");
+                    .HasColumnType("uniqueidentifier")
+                    .HasDefaultValueSql("(NewSequentialId())");
 
                 entity.Property(e => e.StartTime)
                     .HasColumnType("datetime2");
@@ -49,10 +49,10 @@ namespace Console.Models
                 entity.Property(e => e.EndTime)
                     .HasColumnType("datetime2");
 
-                entity.Property(e => e.InsertDate)
+                entity.Property(e => e.InsertDateUTC)
                     .HasColumnType("datetime2")
                     .HasDefaultValueSql("(GetUTCDate())");
-
+                
                 entity.Property(e => e.ErrorCode)
                     .HasComputedColumnSql("case HTTPStatusCode when 200 then 1 when 408 then - 999 else 2 end");
             });
