@@ -9,6 +9,9 @@ namespace Console.Interfaces
 {
     public interface IDbLoggingContext
     {
+        /// <summary>
+        /// Stores a response within the given context.
+        /// </summary>
         Task AddLogEntry(ServerResponse requestResponse);
     }
 }

@@ -21,12 +21,10 @@ namespace Console
         {
             var logEntry = new ServerResponseLog()
             {
-                LogID = Guid.NewGuid(),
                 StartTime = requestResponse.StartTime,
                 EndTime = requestResponse.EndTime,
                 HttpStatusCode = requestResponse.HttpStatusCode,
-                ResponseText = requestResponse.Response,
-                InsertDateUTC = DateTime.UtcNow
+                ResponseText = requestResponse.Response
             };
 
             await context.AddAsync(logEntry);

@@ -21,17 +21,20 @@ namespace Console.Engines
             client.Dispose();
         }
 
+        /// <summary>
+        /// Performs a request for the provided Url.
+        /// </summary>
         public async Task<ServerResponse> MakeRequestAsync(string url)
         {
             string responseContent = null;
             var startTime = DateTime.Now;
+
             using (var response = await client.GetAsync(url))
             {
                 var endTime = DateTime.Now;
                 using (var content = response.Content)
                 {
                     var data = await content.ReadAsStringAsync();
-
                     if (data != null)
                     {
                         System.Console.WriteLine(data);

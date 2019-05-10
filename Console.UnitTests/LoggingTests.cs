@@ -1,10 +1,5 @@
 ﻿using Console.Models;
-using Microsoft.Data.Tools.Schema.Sql.UnitTesting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -12,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Console.UnitTests
 {
@@ -21,18 +17,17 @@ namespace Console.UnitTests
         [Test]
         public async Task AddRecordsToTable()
         {
-            var options = new DbContextOptionsBuilder<ServerResponseLogContext>()
-                //.UseSqlite("Data Source=ae_code_challange.db")       
+            var options = new DbContextOptionsBuilder<ServerResponseLogContext>()     
                 .UseSqlServer("Server=LocalHost;Database=ae_code_challange;Trusted_Connection=True;")
                 .Options;
 
             using (var context = new ServerResponseLogContext(options))
             {
-                // This should normally be avoided, but is used for the esence of time.
-                context.Database.ExecuteSqlCommand("truncate table server_response_log");
+                cleanup(context);
 
                 var now = DateTime.Now;
                 var service = new ServerResponseLogService(context);
+
                 await service.AddLogEntry(new ServerResponse()
                 {
                     StartTime = now.AddDays(-2),
@@ -63,8 +58,15 @@ namespace Console.UnitTests
             using (var context = new ServerResponseLogContext(options))
             {
                 checkView(context);
-                checkLatestEntries(context);                
+                checkLatestEntries(context);
+                cleanup(context);
             }
+        }
+
+        private void cleanup(ServerResponseLogContext context)
+        {
+            // This should normally be avoided, but is used for the esence of time.
+            context.Database.ExecuteSqlCommand("delete from dbo.server_response_log where ResponseText in ('Unit Test Case 001', 'Unit Test Case 002', 'Unit Test Case 003')");
         }
 
         private void checkView(ServerResponseLogContext context)
