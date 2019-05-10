@@ -14,9 +14,21 @@ namespace WebApp.UnitTests
         private readonly TimeController controller = new TimeController(new MockTimeService(testTimestamp));
 
         [TestCase("200", HttpStatusCode.OK)]
+        public async Task testGoodStatusCode(string statusCode, HttpStatusCode expected)
+        {
+            // Given a request with a provided status code
+            var response = await controller.GetTime(statusCode);
+
+            // When we make that request
+            var actual = (HttpStatusCode)(response.Result as ObjectResult).StatusCode;
+
+            // Then we expect the status code to reflect the proper HttpStatusCode
+            Assert.AreEqual(expected, actual);
+        }
+
         [TestCase("404", HttpStatusCode.NotFound)]
         [TestCase("500", HttpStatusCode.InternalServerError)]
-        public async Task testGoodStatusCode(string statusCode, HttpStatusCode expected)
+        public async Task testGoodStatusCodeFail(string statusCode, HttpStatusCode expected)
         {
             // Given a request with a provided status code
             var response = await controller.GetTime(statusCode);
