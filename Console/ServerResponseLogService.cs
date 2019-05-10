@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Console
 {
-    class ServerResponseLogService : IDbLoggingContext
+    public class ServerResponseLogService : IDbLoggingContext
     {
         private readonly ServerResponseLogContext context;
 
@@ -21,10 +21,12 @@ namespace Console
         {
             var logEntry = new ServerResponseLog()
             {
+                LogID = Guid.NewGuid(),
                 StartTime = requestResponse.StartTime,
                 EndTime = requestResponse.EndTime,
                 HttpStatusCode = requestResponse.HttpStatusCode,
-                ResponseText = requestResponse.Response
+                ResponseText = requestResponse.Response,
+                InsertDateUTC = DateTime.UtcNow
             };
 
             await context.AddAsync(logEntry);
@@ -39,5 +41,6 @@ namespace Console
                 System.Console.WriteLine($"Logged entry result failed: {e.InnerException.Message}");
             }
         }
+
     }
 }

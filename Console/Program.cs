@@ -55,7 +55,10 @@ namespace Console
         /// </summary>
         private static void GETRequest(string url)
         {
-            var serverResponseLogService = new ServerResponseLogService(new ServerResponseLogContext());
+            var databaseContext = new ServerResponseLogContext();
+            databaseContext.Database.EnsureCreated();
+
+            var serverResponseLogService = new ServerResponseLogService(databaseContext);
             var client = new GETRequestExample(new HTTPRequestClient(), serverResponseLogService);
 
             client.MakeRequestAsync(url).Wait();

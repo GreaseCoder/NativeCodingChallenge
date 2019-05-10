@@ -1,13 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Console.Models
 {
     public partial class ServerResponseLogContext : DbContext
     {
-        public virtual DbSet<ServerResponseLog> ServerResponseLog { get; set; }
+        public DbQuery<ServerResponseErrorCodeCounts> ErrorCodeCounts { get; set; }
+        public DbSet<ServerResponseLog> ServerResponseLogs { get; set; }
 
         public ServerResponseLogContext()
         {
@@ -28,35 +32,30 @@ namespace Console.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Query<ServerResponseErrorCodeCounts>().ToView("ServerResponseLog_GetHourlyErrorCodeCounts");
+
             modelBuilder.Entity<ServerResponseLog>(entity =>
             {
+                entity.ToTable("server_response_log", schema: "dbo");
+
                 entity.HasKey(e => e.LogID)
                     .HasName("pk__server_response_log__LogID")
                     .ForSqlServerIsClustered(false);
 
-                entity.ToTable("server_response_log");
-
                 entity.HasIndex(e => e.StartTime)
                     .HasName("nix__server_response_log__StartTime_ResponseText");
-                
-                entity.Property(e => e.LogID)
-                    .HasColumnType("uniqueidentifier")
-                    .HasDefaultValueSql("(NewSequentialId())");
-
-                entity.Property(e => e.StartTime)
-                    .HasColumnType("datetime2");
-
-                entity.Property(e => e.EndTime)
-                    .HasColumnType("datetime2");
-
-                entity.Property(e => e.InsertDateUTC)
-                    .HasColumnType("datetime2")
-                    .HasDefaultValueSql("(GetUTCDate())");
-                
-                entity.Property(e => e.ErrorCode)
-                    .HasComputedColumnSql("case HTTPStatusCode when 200 then 1 when 408 then - 999 else 2 end");
             });
-
         }
+
+        public IEnumerable<ServerResponseLog> GetLatestLogs(DateTime startDate, DateTime endDate)
+        {
+            var start = new SqlParameter("@StartTime", startDate);
+            var end = new SqlParameter("@EndTime", endDate);
+
+            return ServerResponseLogs
+                    .AsNoTracking()
+                    .FromSql("EXEC dbo.ServerResponseLog_GetLatestResponses @StartTime, @EndTime", start, end);
+        }
+
     }
 }
