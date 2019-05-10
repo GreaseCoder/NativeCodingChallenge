@@ -4,7 +4,7 @@ drop table dbo.server_response_log
 
 create table dbo.server_response_log
 (
-	LogID uniqueidentifier primary key default (NewSequentialId()),
+	LogID uniqueidentifier default (NewSequentialId()),
 	StartTime datetime2 not null,
 	EndTime datetime2 not null,
 	HTTPStatusCode int not null,
@@ -19,8 +19,15 @@ create table dbo.server_response_log
 )
 go
 
+create clustered index cix__server_response_log__StartTime
+on dbo.server_response_log (StartTime desc)
+go
+
 create nonclustered index nix__server_response_log__StartTime_ResponseText 
 on dbo.server_response_log (StartTime) include (ResponseText)
 go
 
+create nonclustered index nix__server_response_log__StartTime_ErrorCode
+on dbo.server_response_log (StartTime) include (ErrorCode)
+go 
 

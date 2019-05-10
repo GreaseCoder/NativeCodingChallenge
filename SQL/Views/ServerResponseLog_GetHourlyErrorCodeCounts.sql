@@ -16,11 +16,11 @@ alter view ServerResponseLog_GetHourlyErrorCodeCounts ([Time], ErrorCode, [Count
 as
 
 select 
-	convert(varchar, StartTime, 23) + ' ' + convert(varchar, datepart(hour, StartTime)),
+	convert(varchar, StartTime, 23) + ' ' + convert(varchar, datepart(hour, StartTime)),	-- YYYY-MM-DD HH
 	ErrorCode, 
 	count(ErrorCode)
-from dbo.server_response_log
+from dbo.server_response_log with (nolock)
 group by
-	convert(varchar, StartTime, 23) + ' ' + convert(varchar, datepart(hour, StartTime)),
+	convert(varchar, StartTime, 23) + ' ' + convert(varchar, datepart(hour, StartTime)),	-- YYYY-MM-DD HH
 	ErrorCode
 

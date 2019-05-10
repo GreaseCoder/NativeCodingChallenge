@@ -55,10 +55,13 @@ namespace Console
         /// </summary>
         private static void GETRequest(string url)
         {
-            var client = new GETRequestExample(new HTTPRequestClient(), new ServerResponseLogContext());
+            var serverResponseLogService = new ServerResponseLogService(new ServerResponseLogContext());
+            var client = new GETRequestExample(new HTTPRequestClient(), serverResponseLogService);
+
             client.MakeRequestAsync(url).Wait();
             client.MakeRequestAsync(url, 200).Wait();
             client.MakeRequestAsync(url, 500).Wait();
+            client.MakeRequestAsync(url, 408).Wait();
         }
 
 

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Console.Interfaces
 {
-    interface IDbLoggingContext
+    public interface IDbLoggingContext
     {
-        Task AddLogEntry(ServerResponseLog serverResponseLog);
+        Task AddLogEntry(ServerResponse requestResponse);
     }
 }
